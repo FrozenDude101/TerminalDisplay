@@ -15,9 +15,6 @@ typedef PixelData* (*PixelMapper)(PixelData*);
 
 struct Sprite {
 
-    int x;
-    int y;
-
     size_t pixelCount;
     PixelData** pixels;
 
@@ -38,12 +35,10 @@ void forEachPixel(Sprite* sprite, PixelModifier func);
 PixelData** mapPixels(Sprite* sprite, PixelMapper func);
 
 
-Sprite* newSprite(int x, int y, PixelData** pixels, size_t size) {
+Sprite* newSprite(PixelData** pixels, size_t size) {
 
     Sprite* sprite = malloc(sizeof(Sprite));
 
-    sprite -> x = x;
-    sprite -> y = y;
     sprite -> pixelCount = size;
 
     sprite -> pixels = malloc(size * sizeof(PixelData*));
@@ -60,7 +55,7 @@ Sprite* cloneSprite(Sprite* sprite) {
         pixelData[i] = newPixelData(pixel -> x, pixel -> y, pixel -> character, pixel -> colourPairId);
     }
 
-    return newSprite(sprite -> x, sprite -> y, pixelData, sprite -> pixelCount);
+    return newSprite(pixelData, sprite -> pixelCount);
 
 }
 void freeSprite(Sprite* sprite) {
@@ -70,10 +65,10 @@ void freeSprite(Sprite* sprite) {
 
 }
 
-void drawSprite(Display* display, Sprite* sprite) {
+void drawSprite(Display* display, Sprite* sprite, int x, int y) {
 
-    int scaledSpriteX = sprite -> x;
-    int scaledSpriteY = sprite -> y;
+    int scaledSpriteX = x;
+    int scaledSpriteY = y;
     scaleXY(display, &scaledSpriteX, &scaledSpriteY);
 
     for (int i = 0; i < sprite -> pixelCount; i++) {
