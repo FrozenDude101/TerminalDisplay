@@ -29,6 +29,14 @@ void freeSprite(Sprite* sprite);
 
 void drawSprite(Display* display, Sprite* sprite);
 
+Sprite* rotateClockwise(Sprite* sprite, int turns);
+void __90Turn(PixelData* pixel);
+void __180Turn(PixelData* pixel);
+void __270Turn(PixelData* pixel);
+
+void forEachPixel(Sprite* sprite, PixelModifier func);
+PixelData** mapPixels(Sprite* sprite, PixelMapper func);
+
 
 Sprite* newSprite(int x, int y, PixelData** pixels, size_t size) {
 
@@ -41,8 +49,18 @@ Sprite* newSprite(int x, int y, PixelData** pixels, size_t size) {
     sprite -> pixels = malloc(size * sizeof(PixelData*));
     memcpy(sprite -> pixels, pixels, size * sizeof(PixelData*));
 
-
     return sprite;
+
+}
+Sprite* cloneSprite(Sprite* sprite) {
+
+    PixelData** pixelData = malloc(sprite -> pixelCount * sizeof(PixelData*));
+    for (int i = 0; i < sprite -> pixelCount; i++) {
+        PixelData* pixel = sprite -> pixels[i];
+        pixelData[i] = newPixelData(pixel -> x, pixel -> y, pixel -> character, pixel -> colourPairId);
+    }
+
+    return newSprite(sprite -> x, sprite -> y, pixelData, sprite -> pixelCount);
 
 }
 void freeSprite(Sprite* sprite) {
@@ -74,6 +92,51 @@ void drawSprite(Display* display, Sprite* sprite) {
         wattroff(display -> window, COLOR_PAIR(pixel -> colourPairId));
 
     }
+
+}
+
+Sprite* rotate(Sprite* sprite, int turns) {
+
+    turns %= 4;
+    turns += 4;
+    turns %= 4;
+
+    Sprite* clone = cloneSprite(sprite);
+
+    switch (turns) {
+        case 1: forEachPixel(clone, __90Turn); break;
+        case 2: forEachPixel(clone, __180Turn); break;
+        case 3: forEachPixel(clone, __270Turn); break;
+    }
+
+    return clone;
+
+}
+void __90Turn(PixelData* pixel) {
+
+    int pixelX = pixel -> x;
+    int pixelY = pixel -> y;
+
+    pixel -> x = pixelY;
+    pixel -> y = -pixelX - 1;
+
+}
+void __180Turn(PixelData* pixel) {
+
+    int pixelX = pixel -> x;
+    int pixelY = pixel -> y;
+
+    pixel -> x = -pixelX - 1;
+    pixel -> y = -pixelY - 1;
+
+}
+void __270Turn(PixelData* pixel) {
+
+    int pixelX = pixel -> x;
+    int pixelY = pixel -> y;
+
+    pixel -> x = -pixelY - 1;
+    pixel -> y = pixelX;
 
 }
 

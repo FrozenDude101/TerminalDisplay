@@ -29,42 +29,20 @@ int main() {
     pixels[5] = newPixelData(1, 2, ACS_CKBOARD, 0);
     pixels[6] = newPixelData(2, 2, ACS_CKBOARD, 0);
 
-    Sprite* sprite = newSprite(1, 1, pixels, 7);
+    Sprite* sprite = newSprite(4, 4, pixels, 7);
 
     drawSprite(display, sprite);
     refreshDisplay(display);
     getch();
     clearDisplay(display);
 
-    sprite = newSprite(1, 1, mapPixels(sprite, *foo), 7);
-    drawSprite(display, sprite);
-    refreshDisplay(display);
-    getch();
-    clearDisplay(display);
-
-    sprite = newSprite(1, 1, mapPixels(sprite, *foo), 7);
-    drawSprite(display, sprite);
-    refreshDisplay(display);
-    getch();
-    clearDisplay(display);
-
-    sprite = newSprite(1, 1, mapPixels(sprite, *foo), 7);
-    drawSprite(display, sprite);
-    refreshDisplay(display);
-    getch();
-    clearDisplay(display);
-
-    sprite = newSprite(1, 1, mapPixels(sprite, *foo), 7);
-    drawSprite(display, sprite);
-    refreshDisplay(display);
-    getch();
-    clearDisplay(display);
-
-    sprite = newSprite(1, 1, mapPixels(sprite, *foo), 7);
-    drawSprite(display, sprite);
-    refreshDisplay(display);
-    getch();
-    clearDisplay(display);
+    while (true) {
+        sprite = rotate(sprite, 3);
+        drawSprite(display, sprite);
+        refreshDisplay(display);
+        getch();
+        clearDisplay(display);
+    }
 
     endwin();
 
