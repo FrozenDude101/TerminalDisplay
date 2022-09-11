@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <time.h>
 
-#include "display.h"
+#include "TerminalDisplay/display.h"
 #include "queue.h"
 
 #define SNAKE_HEAD 1
