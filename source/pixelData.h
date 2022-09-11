@@ -23,7 +23,7 @@ struct PixelData {
 };
 
 
-PixelData* newPixelData(struct Display* display, int x, int y, chtype character, int colourPairId) {
+PixelData* newPixelData(int x, int y, chtype character, int colourPairId) {
 
     PixelData* pixelData = malloc(sizeof(PixelData));
 

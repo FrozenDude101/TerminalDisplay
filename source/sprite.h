@@ -10,6 +10,7 @@
 
 typedef struct Sprite Sprite;
 typedef void (*PixelModifier)(PixelData*);
+typedef PixelData* (*PixelMapper)(PixelData*);
 
 
 struct Sprite {
@@ -35,11 +36,11 @@ Sprite* newSprite(int x, int y, PixelData** pixels, size_t size) {
 
     sprite -> x = x;
     sprite -> y = y;
+    sprite -> pixelCount = size;
 
     sprite -> pixels = malloc(size * sizeof(PixelData*));
     memcpy(sprite -> pixels, pixels, size * sizeof(PixelData*));
 
-    sprite -> pixelCount = size;
 
     return sprite;
 
@@ -81,6 +82,17 @@ void forEachPixel(Sprite* sprite, PixelModifier func) {
     for (int i = 0; i < sprite -> pixelCount; i++) {
         func(sprite -> pixels[i]);
     }
+    
+}
+PixelData** mapPixels(Sprite* sprite, PixelMapper func) {
+
+    PixelData** newPixels = malloc(sprite -> pixelCount * sizeof(PixelData*));
+
+    for (int i = 0; i < sprite -> pixelCount; i++) {
+        newPixels[i] = func(sprite -> pixels[i]);
+    }
+
+    return newPixels;
     
 }
 

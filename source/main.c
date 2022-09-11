@@ -5,7 +5,7 @@
 #include "sprite.h"
 #include "pixelData.h"
 
-void foo(PixelData* pixel);
+PixelData* foo(PixelData* pixel);
 
 int main() {
 
@@ -21,13 +21,13 @@ int main() {
     int d = addColourPair(display, COLOR_CYAN, COLOR_CYAN);
 
     PixelData** pixels = malloc(sizeof(PixelData*) * 7);
-    pixels[0] = newPixelData(display, 0, 0, ACS_CKBOARD, 0);
-    pixels[1] = newPixelData(display, 1, 0, ACS_CKBOARD, 0);
-    pixels[2] = newPixelData(display, 2, 0, ACS_CKBOARD, 0);
-    pixels[3] = newPixelData(display, 0, 1, ACS_CKBOARD, 0);
-    pixels[4] = newPixelData(display, 0, 2, ACS_CKBOARD, 0);
-    pixels[5] = newPixelData(display, 1, 2, ACS_CKBOARD, 0);
-    pixels[6] = newPixelData(display, 2, 2, ACS_CKBOARD, 0);
+    pixels[0] = newPixelData(0, 0, ACS_CKBOARD, 0);
+    pixels[1] = newPixelData(1, 0, ACS_CKBOARD, 0);
+    pixels[2] = newPixelData(2, 0, ACS_CKBOARD, 0);
+    pixels[3] = newPixelData(0, 1, ACS_CKBOARD, 0);
+    pixels[4] = newPixelData(0, 2, ACS_CKBOARD, 0);
+    pixels[5] = newPixelData(1, 2, ACS_CKBOARD, 0);
+    pixels[6] = newPixelData(2, 2, ACS_CKBOARD, 0);
 
     Sprite* sprite = newSprite(1, 1, pixels, 7);
 
@@ -36,31 +36,31 @@ int main() {
     getch();
     clearDisplay(display);
 
-    forEachPixel(sprite, *foo);
+    sprite = newSprite(1, 1, mapPixels(sprite, *foo), 7);
     drawSprite(display, sprite);
     refreshDisplay(display);
     getch();
     clearDisplay(display);
 
-    forEachPixel(sprite, *foo);
+    sprite = newSprite(1, 1, mapPixels(sprite, *foo), 7);
     drawSprite(display, sprite);
     refreshDisplay(display);
     getch();
     clearDisplay(display);
 
-    forEachPixel(sprite, *foo);
+    sprite = newSprite(1, 1, mapPixels(sprite, *foo), 7);
     drawSprite(display, sprite);
     refreshDisplay(display);
     getch();
     clearDisplay(display);
 
-    forEachPixel(sprite, *foo);
+    sprite = newSprite(1, 1, mapPixels(sprite, *foo), 7);
     drawSprite(display, sprite);
     refreshDisplay(display);
     getch();
     clearDisplay(display);
 
-    forEachPixel(sprite, *foo);
+    sprite = newSprite(1, 1, mapPixels(sprite, *foo), 7);
     drawSprite(display, sprite);
     refreshDisplay(display);
     getch();
@@ -70,8 +70,8 @@ int main() {
 
 }
 
-void foo(PixelData* pixel) {
+PixelData* foo(PixelData* pixel) {
 
-    pixel -> colourPairId ++;
+    return newPixelData(pixel -> x, pixel -> y, pixel -> character, pixel -> colourPairId + 1);
 
 }
