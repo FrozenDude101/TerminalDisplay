@@ -26,7 +26,7 @@ void freeSprite(Sprite* sprite);
 
 void drawSprite(Display* display, Sprite* sprite);
 
-Sprite* rotateClockwise(Sprite* sprite, int turns);
+Sprite* rotateSprite(Sprite* sprite, int turns);
 void __90Turn(PixelData* pixel);
 void __180Turn(PixelData* pixel);
 void __270Turn(PixelData* pixel);
