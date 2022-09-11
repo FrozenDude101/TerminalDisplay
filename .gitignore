@@ -52,5 +52,5 @@ Mkfile.old
 dkms.conf
 
 # Debug files.
-source/main.out
 source/main.c
+source/main.out
