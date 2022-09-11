@@ -90,7 +90,7 @@ void drawSprite(Display* display, Sprite* sprite, int x, int y) {
 
 }
 
-Sprite* rotate(Sprite* sprite, int turns) {
+Sprite* rotateSprite(Sprite* sprite, int turns) {
 
     turns %= 4;
     turns += 4;
