@@ -9,6 +9,7 @@
 
 
 typedef struct Sprite Sprite;
+typedef void (*PixelModifier)(PixelData*);
 
 
 struct Sprite {
@@ -24,7 +25,6 @@ struct Sprite {
 
 Sprite* newSprite(int x, int y, PixelData** pixels, size_t size);
 void freeSprite(Sprite* sprite);
-
 
 void drawSprite(Display* display, Sprite* sprite);
 
@@ -51,7 +51,6 @@ void freeSprite(Sprite* sprite) {
 
 }
 
-
 void drawSprite(Display* display, Sprite* sprite) {
 
     int scaledSpriteX = sprite -> x;
@@ -75,6 +74,14 @@ void drawSprite(Display* display, Sprite* sprite) {
 
     }
 
+}
+
+void forEachPixel(Sprite* sprite, PixelModifier func) {
+
+    for (int i = 0; i < sprite -> pixelCount; i++) {
+        func(sprite -> pixels[i]);
+    }
+    
 }
 
 
