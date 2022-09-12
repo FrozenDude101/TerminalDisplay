@@ -21,15 +21,20 @@ struct Sprite {
 };
 
 
-Sprite* newSprite(int x, int y, PixelData** pixels, size_t size);
+Sprite* newSprite(PixelData** pixels, size_t size);
 void freeSprite(Sprite* sprite);
 
-void drawSprite(Display* display, Sprite* sprite);
+void drawSprite(Display* display, Sprite* sprite, int x, int y);
 
 Sprite* rotateSprite(Sprite* sprite, int turns);
 void __90Turn(PixelData* pixel);
 void __180Turn(PixelData* pixel);
 void __270Turn(PixelData* pixel);
+
+Sprite* reflectSpriteX(Sprite* sprite);
+void __reflectX(PixelData* pixel);
+Sprite* reflectSpriteY(Sprite* sprite);
+void __reflectY(PixelData* pixel);
 
 void forEachPixel(Sprite* sprite, PixelModifier func);
 PixelData** mapPixels(Sprite* sprite, PixelMapper func);
@@ -132,6 +137,33 @@ void __270Turn(PixelData* pixel) {
 
     pixel -> x = -pixelY - 1;
     pixel -> y = pixelX;
+
+}
+
+Sprite* reflectSpriteX(Sprite* sprite) {
+
+    Sprite* clone = cloneSprite(sprite);
+    forEachPixel(clone, __reflectX);
+    return clone;
+
+}
+void __reflectX(PixelData* pixel) {
+
+    pixel -> x *= -1;
+    pixel -> x -= 1;
+
+}
+Sprite* reflectSpriteY(Sprite* sprite) {
+
+    Sprite* clone = cloneSprite(sprite);
+    forEachPixel(clone, __reflectY);
+    return clone;
+
+}
+void __reflectY(PixelData* pixel) {
+
+    pixel -> y *= -1;
+    pixel -> y -= 1;
 
 }
 
