@@ -167,6 +167,24 @@ void __reflectY(PixelData* pixel) {
 
 }
 
+void realignSprite(Sprite* sprite) {
+
+    int minX = sprite -> pixels[0] -> x;
+    int minY = sprite -> pixels[1] -> y;
+    for (int i = 1; i < sprite -> pixelCount; i++) {
+        PixelData* pixel = sprite -> pixels[i];
+        if (minX > pixel -> x) minX = pixel -> x;
+        if (minY > pixel -> y) minY = pixel -> y;
+    }
+
+    for (int i = 0; i < sprite -> pixelCount; i++) {
+        PixelData* pixel = sprite -> pixels[i];
+        pixel -> x -= minX;
+        pixel -> y -= minY;
+    }
+
+}
+
 void forEachPixel(Sprite* sprite, PixelModifier func) {
 
     for (int i = 0; i < sprite -> pixelCount; i++) {
