@@ -50,6 +50,11 @@ void __90Turn(PixelData* pixel);
 void __180Turn(PixelData* pixel);
 void __270Turn(PixelData* pixel);
 
+//  makeAllSpriteRotations  ->  Creates an array of all 4 sprite rotations. All copies are unique from the original sprite.
+//      Sprite* sprite  ->  A sprite to rotate.
+//      return Sprite** ->  The array of rotated sprites.
+Sprite** makeAllSpriteRotations(Sprite* sprite);
+
 //  reflectSpriteX  ->  Reflects a sprite around y = 0, its left edge.
 //      Sprite* sprite  ->  The sprite to reflect.
 //      returns Sprite* ->  A new reflected sprite.
@@ -177,6 +182,18 @@ void __270Turn(PixelData* pixel) {
 
     pixel -> x = -pixelY - 1;    //  Aligns the new sprite correctly.
     pixel -> y = pixelX;
+
+}
+
+Sprite** makeAllSpriteRotations(Sprite* sprite) {
+
+    Sprite** sprites = malloc(sizeof(Sprite*) * 4);
+
+    for (int i = 0; i < 4; i++) {
+        sprites[i] = rotateSprite(sprite, i);
+    }
+
+    return sprites;
 
 }
 
