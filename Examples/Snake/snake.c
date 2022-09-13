@@ -5,10 +5,11 @@
 #include "TerminalDisplay/display.h"
 #include "queue.h"
 
-#define SNAKE_HEAD 1
-#define SNAKE_BODY 2
-#define APPLE      3
-#define TEXT       4
+
+#define SNAKE_HEAD 2
+#define SNAKE_BODY 3
+#define APPLE      4
+#define TEXT       5
 
 #define WIDTH 17
 #define HEIGHT 9
@@ -42,7 +43,7 @@ int main(int argc, char** argv) {
 
     srandom(time(NULL));
 
-    Display* display = initDisplay(WIDTH, HEIGHT, SCALE, FPS);
+    Display* display = newDisplay(WIDTH, HEIGHT, SCALE, FPS);
 
     init_pair(SNAKE_HEAD, COLOR_YELLOW, COLOR_YELLOW);
     init_pair(SNAKE_BODY, COLOR_GREEN, COLOR_GREEN);
@@ -78,7 +79,7 @@ void gameLoop(Display* display) {
 
         if (state == 0) {
 
-            if (display -> frame % 10 == 0) {
+            if (display -> currentFrame % 10 == 0) {
 
                 int tailX = snake -> head -> x;
                 int tailY = snake -> head -> y;
@@ -96,7 +97,7 @@ void gameLoop(Display* display) {
 
                 if (wallCollision(display, snake) || selfCollision(snake)) {
 
-                    startFrame = display -> frame;
+                    startFrame = display -> currentFrame;
                     state = 1;
 
                 }
@@ -136,9 +137,9 @@ void gameLoop(Display* display) {
 
         } else if (state == 1) {
 
-            if (display -> frame - startFrame == frameDelay) {
+            if (display -> currentFrame - startFrame == frameDelay) {
                 dequeue(snake);
-                startFrame = display -> frame;
+                startFrame = display -> currentFrame;
                 if (frameDelay != 1) frameDelay -= 1;
 
                 if (queueLength(snake) == 0) {

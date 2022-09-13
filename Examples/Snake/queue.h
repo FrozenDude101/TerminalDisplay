@@ -1,3 +1,6 @@
+#include <stdlib.h>
+
+
 typedef struct Queue Queue;
 typedef struct Node Node;
 
